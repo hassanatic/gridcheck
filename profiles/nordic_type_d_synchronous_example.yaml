@@ -1,0 +1,39 @@
+name: Example profile, Nordic synchronous area, type D synchronous power-generating module
+source: >-
+  Commission Regulation (EU) 2016/631 (RfG): Art. 13(1)(a) Table 2, Art. 13(2),
+  Art. 16(2)(a) Table 6.1, Art. 16(3)(a) Table 7.1
+note: >-
+  The ranges are from the RfG. The chosen values are illustrative examples inside those ranges.
+  Binding values come from the relevant TSO's national requirements (in Finland, Fingrid).
+f_nominal_hz: 50.0
+
+# Fault ride-through, Table 7.1 (synchronous, type D). Voltages in pu, times in seconds.
+frt:
+  table: "7.1"
+  u_ret: 0.0
+  u_clear: 0.25
+  u_rec1: 0.5
+  u_rec2: 0.9
+  t_clear: 0.15
+  t_rec1: 0.45
+  t_rec2: 0.7
+  t_rec3: 1.5
+
+# Limited frequency sensitive mode, over-frequency (Art. 13(2)): threshold 50.2-50.5 Hz,
+# droop 2-12 %. An initial delay above 2 s must be justified to the TSO.
+lfsm_o:
+  f_threshold_hz: 50.2
+  droop: 0.05
+  max_delay_s: 2.0
+
+# Table 2, Nordic: minimum time the module must stay connected in each range.
+frequency_ranges:
+  - {f_min: 47.5, f_max: 48.5, min_minutes: 30}
+  - {f_min: 48.5, f_max: 49.0, min_minutes: 30}  # set by the TSO, not less than 30 minutes
+  - {f_min: 49.0, f_max: 51.0, min_minutes: null}  # unlimited
+  - {f_min: 51.0, f_max: 51.5, min_minutes: 30}
+
+# Table 6.1, Nordic, 110-300 kV connection points: how long operation is required in each range.
+voltage_ranges_110_300kv:
+  - {u_min: 0.90, u_max: 1.05, max_minutes: null}  # unlimited
+  - {u_min: 1.05, u_max: 1.10, max_minutes: 60}
